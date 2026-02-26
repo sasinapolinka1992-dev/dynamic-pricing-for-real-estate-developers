@@ -12,23 +12,25 @@ import {
   Layers,
   FileText,
   GanttChart,
-  History,
   Package,
   CheckCircle2,
   Info,
   AlertCircle,
   X,
   Maximize,
-  Minimize
+  Minimize,
+  Calculator,
+  Zap,
+  History
 } from 'lucide-react';
 import Chessboard from './components/Chessboard';
-import PricingSimulator from './components/PricingSimulator';
+import PricingSimulator from './components/analytics/PricingSimulator';
+import DemandStimulator from './components/analytics/DemandStimulator';
 import Dashboard from './components/Dashboard';
 import GroupingManager from './components/settings/GroupingManager';
 import SalesPlanManager from './components/settings/SalesPlanManager';
 import RulesEngine from './components/settings/RulesEngine';
 import HistoryManager from './components/settings/HistoryManager';
-import RulesLogs from './components/settings/RulesLogs';
 import ReevaluationManager from './components/settings/ReevaluationManager';
 import AssortmentManager from './components/settings/AssortmentManager';
 import StartSalesPricing from './components/StartSalesPricing';
@@ -39,6 +41,12 @@ enum AppTab {
   ASSORTMENT = 'assortment',
   ANALYTICS = 'analytics',
   START_SALES = 'start_sales'
+}
+
+enum AnalyticsSubTab {
+  DASHBOARD = 'dashboard',
+  DEMAND_STIMULATOR = 'demand_stimulator',
+  PRICING_SIMULATOR = 'pricing_simulator'
 }
 
 enum SettingsSubTab {
@@ -57,6 +65,7 @@ interface Notification {
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<AppTab>(AppTab.START_SALES);
   const [settingsTab, setSettingsTab] = useState<SettingsSubTab>(SettingsSubTab.GROUPING);
+  const [analyticsTab, setAnalyticsTab] = useState<AnalyticsSubTab>(AnalyticsSubTab.DASHBOARD);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -155,7 +164,7 @@ const App: React.FC = () => {
         return (
           <div className="space-y-6">
              <div className="flex justify-between items-center mb-6">
-              <h1 className="text-2xl font-bold text-slate-700">Работа с ассортиментом</h1>
+              <h1 className="text-2xl font-bold text-slate-700">Работа с резервами</h1>
             </div>
             <AssortmentManager />
           </div>
@@ -163,13 +172,42 @@ const App: React.FC = () => {
       case AppTab.SETTINGS:
         return renderSettings();
       case AppTab.ANALYTICS:
-        return <Dashboard />;
+        return (
+          <div className="space-y-6">
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h1 className="text-2xl font-black text-slate-800 uppercase tracking-tight">Аналитика</h1>
+              </div>
+            </div>
+            <div className="flex border-b border-slate-200 gap-8">
+              {[
+                { id: AnalyticsSubTab.DASHBOARD, label: 'Панель управления', icon: BarChart3 }
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setAnalyticsTab(tab.id)}
+                  className={`flex items-center gap-2 pb-3 px-1 text-sm font-semibold transition-all border-b-2 ${
+                    analyticsTab === tab.id 
+                    ? 'border-primary text-primary' 
+                    : 'border-transparent text-slate-400 hover:text-slate-600'
+                  }`}
+                >
+                  <tab.icon className="w-4 h-4" />
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+            <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+              {analyticsTab === AnalyticsSubTab.DASHBOARD && <Dashboard />}
+            </div>
+          </div>
+        );
       default:
         return <div className="flex items-center justify-center h-96 text-slate-400">Модуль находится в разработке</div>;
     }
   };
 
-  return (
+  const mainContent = (
     <div className="min-h-screen bg-[#FDFDFD] flex flex-col">
       {/* Global Notifications Container */}
       <div className="fixed top-24 right-8 z-[1000] flex flex-col gap-3 w-80 pointer-events-none">
@@ -209,7 +247,7 @@ const App: React.FC = () => {
             {[
               { id: AppTab.SETTINGS, label: 'Общие настройки', icon: Settings },
               { id: AppTab.REEVALUATION, label: 'Переоценка', icon: TrendingUp },
-              { id: AppTab.ASSORTMENT, label: 'Работа с ассортиментом', icon: Package },
+              { id: AppTab.ASSORTMENT, label: 'Работа с резервами', icon: Package },
               { id: AppTab.ANALYTICS, label: 'Аналитика', icon: BarChart3 },
               { id: AppTab.START_SALES, label: 'ДЦО для старта продаж', icon: Rocket },
             ].map(tab => (
@@ -244,7 +282,9 @@ const App: React.FC = () => {
       </header>
       <main className="flex-1 p-8 max-w-[1600px] mx-auto w-full">{renderContent()}</main>
     </div>
-  );
+  )
+
+  return mainContent;
 };
 
 export default App;
