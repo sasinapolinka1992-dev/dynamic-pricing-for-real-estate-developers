@@ -484,7 +484,7 @@ const Chessboard: React.FC<ChessboardProps> = ({
               }`}
             >
               {showMiniCard ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-              {showMiniCard ? 'Скрыть' : 'Показать'} миникарточку
+              {showMiniCard ? 'Скрыть' : 'Показать'} Превью помещения
             </button>
           </div>
         </div>
@@ -776,7 +776,7 @@ const Chessboard: React.FC<ChessboardProps> = ({
         </div>
       )}
 
-      {/* Миникарточка помещения при клике */}
+      {/* Превью помещения помещения при клике */}
       {hoveredUnit && showMiniCard && (
         <div 
           className="fixed z-[500] bg-white rounded-2xl shadow-2xl border border-slate-100 p-6 w-[360px] animate-in fade-in zoom-in-95"
