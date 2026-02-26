@@ -484,7 +484,7 @@ const Chessboard: React.FC<ChessboardProps> = ({
               }`}
             >
               {showMiniCard ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-              {showMiniCard ? 'Скрыть' : 'Показать'} Превью помещения
+              {showMiniCard ? 'Скрыть'} Превью помещения
             </button>
           </div>
         </div>
