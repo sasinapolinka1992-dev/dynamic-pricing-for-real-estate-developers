@@ -233,7 +233,6 @@ const StartSalesPricing: React.FC = () => {
             <>
               <button onClick={() => setIsBasePriceModalOpen(true)} className="flex items-center gap-2.5 px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-sm active:scale-95 hover:border-primary transition-all"><DollarSign className="w-4 h-4 text-primary" /> Установить цену за м²</button>
               <button onClick={() => setIsMassChangeModalOpen(true)} className="flex items-center gap-2.5 px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-sm active:scale-95 hover:border-primary transition-all"><Calculator className="w-4 h-4 text-primary" /> Массовое изменение</button>
-              <button onClick={() => notify('Цены округлены')} className="flex items-center gap-2.5 px-6 py-3 bg-slate-800 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl active:scale-95"><Coins className="w-4 h-4" /> Округлить</button>
               <div className="h-8 w-px bg-slate-100 mx-2" />
               <button onClick={() => setActiveStep('simulator')} className="flex items-center gap-2.5 px-6 py-3 bg-primary/10 text-primary border border-primary/20 rounded-2xl text-[10px] font-black uppercase tracking-widest active:scale-95 hover:bg-primary hover:text-white transition-all"><Zap className="w-4 h-4" /> Симулятор</button>
             </>
